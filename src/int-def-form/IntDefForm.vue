@@ -52,6 +52,12 @@ export default {
       }
     }
   },
+  provide() {
+    return {
+      recurseRegist: this.recurseRegist || this.recurseRegistRoot
+    };
+  },
+  inject: ['recurseRegist'],
   props: {
     formFields: {
       type: [Array, Function],
@@ -63,6 +69,11 @@ export default {
     }
   },
   emits: ['update:modelValue'],
+  data() {
+    return {
+      recurseRegistRoot: []
+    };
+  },
   computed: {
     computedColumnDefinition() {
       if (this.formFields.constructor === Array) {
@@ -93,16 +104,30 @@ export default {
       return `${width}px`;
     }
   },
+  created() {
+    (this.recurseRegist || this.recurseRegistRoot).push(this);
+  },
   methods: {
     formDataChange(prop, e) {
       const tmp = this.modelValue;
       tmp[prop] = e;
       this.$emit('update:modelValue', tmp);
     },
-    validate(outValid) {
-      this.$refs['auto-form'].validate((val) => {
-        outValid(val);
+    validSelf(outValid) {
+      this.$refs['auto-form'].validate((valid) => {
+        outValid(valid);
       });
+    },
+    validate(outValid) {
+      let ret = true;
+      this.recurseRegistRoot.forEach((childComponent) => {
+        childComponent.validSelf((valid) => {
+          if (!valid) {
+            ret = false;
+          }
+        });
+      });
+      outValid(ret);
     },
     resetFields() {
       this.$refs['auto-form'].resetFields();
