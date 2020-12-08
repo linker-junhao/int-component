@@ -3,7 +3,7 @@
     ref="auto-form"
     :model="modelValue"
     :rules="formRule"
-    :label-width="labelWidthAuto"
+    :label-width="labelWidth"
   >
     <div
       v-for="(field) in computedColumnDefinition"
@@ -66,6 +66,9 @@ export default {
     modelValue: {
       type: Object,
       required: true
+    },
+    labelWidth: {
+      type: String
     }
   },
   emits: ['update:modelValue'],
@@ -92,16 +95,6 @@ export default {
         }
       });
       return ret;
-    },
-    labelWidthAuto() {
-      let width = 36 + 12;
-      this.computedColumnDefinition.forEach((item) => {
-        const tmp = item.label.length * 18 + 12;
-        if (tmp > width) {
-          width = tmp;
-        }
-      });
-      return `${width}px`;
     }
   },
   created() {
