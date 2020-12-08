@@ -129,8 +129,14 @@ export default {
       });
       outValid(ret);
     },
+    resetSelfFields() {
+      this.$refs['auto-form'].resetFields()
+    },
     resetFields() {
-      this.$refs['auto-form'].resetFields();
+      this.recurseRegistRoot.forEach(comp => {
+        comp.resetSelfFields()
+      })
+      this.recurseRegistRoot.splice(0, -1)
     }
   }
 };
