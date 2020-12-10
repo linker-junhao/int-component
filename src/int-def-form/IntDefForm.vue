@@ -113,6 +113,7 @@ export default {
     },
     validate(outValid) {
       let ret = true;
+      this.recurseRegistRoot = this.recurseRegistRoot.filter((compo) => compo !== undefined);
       this.recurseRegistRoot.forEach((childComponent) => {
         childComponent.validSelf((valid) => {
           if (!valid) {
@@ -123,13 +124,14 @@ export default {
       outValid(ret);
     },
     resetSelfFields() {
-      this.$refs['auto-form'].resetFields()
+      this.$refs['auto-form'].resetFields();
     },
     resetFields() {
-      this.recurseRegistRoot.forEach(comp => {
-        comp.resetSelfFields()
-      })
-      this.recurseRegistRoot.splice(0, -1)
+      this.recurseRegistRoot = this.recurseRegistRoot.filter((compo) => compo !== undefined);
+      this.recurseRegistRoot.forEach((comp) => {
+        comp.resetSelfFields();
+      });
+      this.recurseRegistRoot.splice(0, -1);
     }
   }
 };
