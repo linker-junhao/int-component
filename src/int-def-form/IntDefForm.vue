@@ -68,7 +68,10 @@ export default {
       required: true
     },
     labelWidth: {
-      type: String
+      type: String,
+      default() {
+        return '';
+      }
     }
   },
   emits: ['update:modelValue'],
