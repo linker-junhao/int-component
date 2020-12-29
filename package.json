@@ -25,7 +25,7 @@
   "homepage": "https://github.com/linkerGitHub/int-component#readme",
   "dependencies": {
     "axios": "^0.21.0",
-    "element-plus": "^1.0.1-beta.2",
+    "element-plus": "^1.0.1-beta.17",
     "vue": "^3.0.3"
   },
   "devDependencies": {

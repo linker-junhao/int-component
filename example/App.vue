@@ -1,24 +1,22 @@
 <template>
-  <eg-int-def-form />
-  <int-pagination
-    background
-    layout="prev, pager, next"
-    :total="1000"
-  />
-  <el-pagination
-    background
-    layout="prev, pager, next"
-    :total="1000"
+  <int-manage-table
+    :get-table-data="getTableData"
+    :get-total="getTotal"
   />
 </template>
 
 <script>
-import IntPagination from '../src/int-pagination/IntPagination.vue';
-import EgIntDefForm from './EgIntDefForm.vue';
+import IntManageTable from '../src/int-manage-table/IntManageTable.vue';
+import manageTableUtils from './manageTableUtils';
 
 export default {
   name: 'App',
-  components: { EgIntDefForm, IntPagination }
+  components: {
+    IntManageTable
+  },
+  methods: {
+    ...manageTableUtils
+  }
 };
 </script>
 
