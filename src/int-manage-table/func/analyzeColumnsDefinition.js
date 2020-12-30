@@ -5,17 +5,18 @@
 import { computed } from 'vue';
 
 
-function getAccessibleCols(defs) {
-  return computed(() => defs.fitler((colDef) => colDef.accessibility !== false));
+function getAccessibleCols(props) {
+  const defs = props.columnsDefinition;
+  return computed(() => defs.filter((colDef) => colDef.accessibility !== false));
 }
 
 
 function getVisibleCols(defs) {
-  return computed(() => defs.fitler((colDef) => colDef.visibility !== false));
+  return computed(() => defs.value.filter((colDef) => colDef.visibility !== false));
 }
 
 export default function analyzeColumnsDefinition(props) {
-  const accessibleCols = getAccessibleCols(props.columnsDefinition);
+  const accessibleCols = getAccessibleCols(props);
   const visibleCols = getVisibleCols(accessibleCols);
   return {
     accessibleCols, visibleCols
