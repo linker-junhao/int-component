@@ -3,8 +3,8 @@ import { ElTable } from 'element-plus';
 import testData from './test/testData.json';
 import getStartupDataFromPrimitiveData from './func/getStartupDataFromPrimitiveData';
 import analyzeColumnsDefinition from './func/analyzeColumnsDefinition';
-import genTableColumns from './func/genTableColumns';
-import IntPagination from '../int-pagination/IntPagination';
+import TableColumns from './func/TableColumns';
+import TablePagination from './func/TablePagination';
 
 export default {
   name: 'IntManageTable',
@@ -57,24 +57,21 @@ export default {
     };
   },
   render() {
+    // 翻页部分
+    const pagination = new TablePagination({
+      total: this.total,
+      currentPage: 1,
+      pageSize: 20
+    }, (() => {}));
+
     // 表格部分
-    const tableColumns = genTableColumns(this.visibleCols);
+    const tableColumns = new TableColumns(this.visibleCols);
     const table = h(ElTable, {
       data: this.tableData,
       ...this.tableProps
-    }, tableColumns);
+    }, tableColumns.VNode);
 
-    // 分页部分
-    const pagination = h(IntPagination, {
-      total: this.total,
-      pageSizes: [3, 10, 20, 50, 100, 200],
-      pageSize: 3,
-      layout: 'total, sizes, prev, pager, next, jumper',
-      currentPage: 1,
-      ...this.paginationProps
-    });
-
-    const layout = h('div', [table, pagination]);
+    const layout = h('div', [table, pagination.VNode]);
     return layout;
   }
 };
