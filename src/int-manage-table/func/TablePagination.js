@@ -19,15 +19,16 @@ function TablePagination(pageStatus = {}, pageStatusChangeHandle, paginationProp
   this.VNode = h(IntPagination, {
     total: this.pageStatus.total.value,
     pageSizes: [10, 20, 50, 100, 200],
-    pageSize: this.pageStatus.pageSize,
+    pageSize: this.pageStatus.pageSize.value,
     layout: 'total, sizes, prev, pager, next, jumper',
-    currentPage: this.pageStatus.currentPage,
+    currentPage: this.pageStatus.currentPage.value,
     onCurrentChange: (e) => {
       this.pageStatus.currentPage.value = e;
       changeHandle.call(this);
     },
     onSizeChange: (e) => {
       this.pageStatus.pageSize.value = e;
+      console.log(this.pageStatus.pageSize)
       changeHandle.call(this);
     },
     ...paginationProps

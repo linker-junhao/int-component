@@ -61,7 +61,7 @@ export default {
     const pagination = new TablePagination({
       total: this.total,
       currentPage: 1,
-      pageSize: 20
+      pageSize: 10
     }, (() => {}));
 
     // 表格部分
